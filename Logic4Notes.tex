@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6.5in, 10in}]{geometry}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{parskip}
+
+\title{Logic Session 4 Notes}
+\author{Monica}
+\date{December 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{Category Theory}
+\begin{itemize}
+  \item Essentially everything in maths can be incorporated into categories, therefore making CT arguably \emph{the} approach forward
+\end{itemize}
+
+\section*{Q1. Why is propositional logic not sufficient? Can all statements be modelled in propositional logic while retaining the semantics?}
+\begin{itemize}
+  \item Prop logic does not allow us to talk about individual objects
+  \item FOL is able to encode every \underline{sequence} (w/ $\vdash$) into a logical formula, allowing us to conclude A$\Rightarrow$B w/o making any assumptions
+  \begin{itemize}
+    \item A $\vdash$ B (sequence) $\equiv$ $\vdash$ A $\Rightarrow$ B (logical formula)
+    \begingroup
+    \renewcommand\labelenumi{(\theenumi)}
+    \begin{enumerate}
+    \item $\forall n \in \mathbb{N} : n$ is odd $\Rightarrow n^2$ is odd  \\ (can also be written as $n$ is odd $\Rightarrow n^2$ is odd, $n \in \mathbb{N}$) \label{item:1}
+    \item $\forall n \in \mathbb{N} : n$ is odd $\Rightarrow \forall n \in \mathbb{N} : n^2$ is odd  \label{item:2}
+    \end{enumerate}
+    \endgroup
+    \item In the session, we investigated the following example, where (\ref{item:1}) is a proposition, and (\ref{item:2}) is our attempt at breaking down the proposition by applying the universal quantifier to both propositional variables (as the scope of the universal quantifier encompasses n and \(n^2\)). We find that (\ref{item:2}) does not make sense and is a vacuous statement, thus making this incompatible with propositional logic.
+    \item[$\therefore$] At the end of the day, first order logic can still use propositions, though it is not needed.
+    \item[$\therefore$] Just because a statement is a proposition, unless it can be further broken down into its constituent propositions and logical connectives, then it is not necessarily compatible with propositional logic.
+  \end{itemize}
+  \item[$\therefore$] When using FOL, can just rely on propositions w/o need of sequence. On the other hand, having sequences is also a technically way to avoid use of universal quantifiers
+  \item[$\therefore$] That said, sometimes there’s no reason to turn sequences into formulas, esp when working w/ other forms of logic like CT, it’s better to use sequences.
+\end{itemize}
+
+\subsubsection*{Extension: Quantifiers}
+\begin{itemize}
+  \item Universal quantifiers are not always necessary to produce meaningful formulas with variables, since they are already encoded in the \underline{context} of the formulae.
+  \begin{itemize}
+    \item The context captures the free variables (unbounded by quantifiers) in the formula. Therefore, we don't need the universal quantifier in particular to do logic involving variables
+    \item Fundamentally, the quantifiers take a formula and turn it into a proposition (each do this differently)
+  \end{itemize}
+\end{itemize}
+
+\section*{Q2. Is FOL sufficient to model all of maths?}
+\begin{itemize}
+  \item No since FOL only talks about the variables of the predicates, but not the predicates themselves (leads to 2nd and higher order logic)
+  \item[!]Important point: Even though there may be diff systems that are more high level/complex, it doesn't make a system insufficient to describe a model. Just simply diff perspectives
+\end{itemize}
+
+\subsubsection*{Extension: How can we then quantify over infinitely many variables?}
+\begin{itemize}
+  \item Since we can quantify over functions, we can therefore quantify over infinitely many vars
+  \item There are theories that can input infinitely many vars, allowing us to make sense of this fact
+  \item[$\therefore$] We’ve already been using this notion when working w/ intersections and unions in Amman-Escher
+\end{itemize}
+
+\subsubsection*{Extension: Why “first’ order logic?}
+\begin{itemize}
+  \item 1st: quantifies over \underline{individual elements} from interpretation domain (ie. natural numbers, real numbers)
+  \item 2nd: quantities over entire \underline{sets}
+  \item 3rd: quantifies over \underline{sets of sets}, etc
+  \item[$\therefore$] Therefore “order” refers to the degree of the families of sets. Initially i thought it could related to the definition of order in partial and total order, though i now think they are fundamentally different concepts
+  \begin{itemize}
+    \item[$\therefore$] I can also see a parallel to Lean in terms of the hierarchy of Types. {\textcolor{red}{Is the significance of having a hierarchical structure in Lean related to higher order logic?}}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Extension: NAND gates}
+\begin{itemize}
+  \item Concept in (theoretical ?) comp sci/maths that enables the entirety of prop logic to be encoded using NAND gates only, as opposed to {$\Rightarrow, \Leftrightarrow, \neg, \wedge, \vee$}
+  \begin{itemize}
+    \item This is potentially useful in terms of computing (replacing AND, OR gates with NAND gates), though problems with complexity and cost benefit arises
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Extension: Computer science}
+\begin{itemize}
+  \item Turing machine used as a benchmark to determine whether something is theoretically computable in finite amt of time (at least classically)
+  \item If something can be made into/used as a Turing machine, then it is computable, ie. John Conway’s Game of Life
+  \item Benefits of using this: 
+  \begin{itemize}
+    \item finding algorithms that solve these computable problems
+    \item Classify problems and study the relationships between them
+    \item Potentially find different notions of computability and surpassing Turing machine
+    \begin{itemize}
+      \item Ie. somehow being able to implement infinitely running programs
+    \end{itemize}
+  \end{itemize}
+  \item[$\therefore$] Whenever there is a limitation, explore whether it can be surpassed
+\end{itemize}
+
+\section*{Q3. Are predicates strictly necessary for FOL?}
+\begin{itemize}
+  \item[$\therefore$] No, bc it is fundamentally a relation, thus we only need relations. They are just for convenience
+  \item However in lean, it is difficult to work in terms of relations/function (which are just a specific kind of relation - left total and right unique) in lieu of predicates (i think)
+\end{itemize}
+
+\section*{Q4. Definition of theory}
+\begin{itemize}
+  \item[$\rightarrow$] A theory is defined by a set of axioms OR
+  \item[$\rightarrow$] A theory is the set of all sequences that are true in the theory
+\end{itemize}
+
+\section*{Q5. Completeness of a deduction system and theory}
+\begin{itemize}
+  \item[$\rightarrow$] A deduction system is complete if every statement in system that is true* has a proof that can be derived from statements of the same system
+  \item[$\rightarrow$] A theory is complete if every question/statement pertaining to the theory has proof within statements that are part of the same theory
+  \item true in all models*
+  \vspace{4mm} 
+  \item[!] FOL is complete (Godel’s completeness theorem)
+  \item The incompleteness theorem refers to any system/theory that is an extension of the theory of the natural numbers, since Peano axioms are incomplete
+  \begin{itemize}
+    \item This is not the case for FOL, but for 2nd and higher order logic
+  \end{itemize}
+\end{itemize}
+
+\section*{Q6. Type theory}
+\begin{itemize}
+  \item[$\rightarrow$] Involves \underline{type construction}
+  \begin{itemize}
+    \item Building types from other types and logical connectors.
+    \item Ie. Product type, function type, proposition type
+  \end{itemize}
+  \item Type is analogous to data type in coding. OOP is like an application of type theory
+  \vspace{4mm} 
+  \item Lean type checks
+  \begin{itemize}
+    \item Validity in lean means the verification of whether constructed type actually reproduces the same type as the proposition itself has
+    \item[$\therefore$] A proof in Lean is nothing but the type of the result itself
+  \end{itemize}
+  \vspace{4mm} 
+  \item Cool thing: Homotopy type theory
+  \begin{itemize}
+    \item Combines topological and logical ideas together
+    \item Proposed as new foundation of logic (in lieu of set theory and even CT)
+  \end{itemize}
+\end{itemize}
+
+\section*{Q8. Modelling functions in terms of sets}
+\begin{itemize}
+  \item[$\rightarrow$] Functions can be modelled as ordered pair formed by the domain and co-domain of function, $(x, f(x))$, which is a subset of the Cartesian product of two sets, X, Y, such that there is exactly 1 element of Y for each element in X
+\end{itemize}
+
+\section*{Reflection:}
+\begin{itemize}
+  \item Understanding still superficial
+  \item Did not really make use of meta-cognitive thinking
+  \item Need to actively cross-link between different concepts learnt (ie. Amman, Escher, logic, diff geo, etc) so to not forget and continue making connections between diff areas
+\end{itemize}
+
+\pagebreak
+\section*{Model of FOL}
+(this model is more general and pragmatic than shown in Lean - makes it easily applicable for diff systems too)
+\subsubsection{Formal language}
+\begin{itemize}
+  \item[$\rightarrow$] \underline{Signature} $\Sigma = {Types} \cup {Function symbols} \cup {Relation symbols}$, where
+  \begin{itemize}
+    \item functions - $F:A_1 \times ... \times A_n \rightarrow B$
+    \item relations - $R \rightarrowtail A_1 \times ... \times A_n$
+    \item arity is the number of arguments/variables
+  \end{itemize}
+  \item[$\rightarrow$] \underline{Variables $\add$ Context} : set of pairs, var = ${(x,A) \vert x is a symbol for var, A is the type of x}$
+  \item Relations build formulas and functions build terms
+  
+  \item[$\rightarrow$] \underline{Terms}
+  \begingroup
+    \renewcommand\labelenumi{(\theenumi)}
+    \begin{enumerate}
+      \item Any variable $x:A$ is a term of type $A$ \label{item:1}
+      \item if $t_1:A_1, ..., t_n:A_n$ are terms of types $A_1:A_n$ and  $F:A_1 \times ... \times A_n \rightarrow B$ is a function symbol, then $F(t_1, t_2, ..., t_n)$ is a term of type $B$ \label{item:2}
+      \item The set $\Sigma$-term of terms is the set satisfying (\ref{item:1}) and (\ref{item:2})
+    \end{enumerate}
+  \endgroup
+
+  \item[$\rightarrow$] \underline{Formulae-in-context}
+  \begin{enumerate}
+    \item Technically only for free variables - essentially clarifying what are the types of variables
+  \end{enumerate}
+  \begingroup
+    \renewcommand\labelenumi{(\theenumi)}
+    \begin{enumerate}
+      \item $\top$ and $\bot$are formulae in the empty context (smallest context possible) 
+      \item if $\psi$ and $\varphi$ are formulae-in-context, then the following are also formulae-in-context: \\ {\textcolor{red}{(not entirely sure what is meant by joined context - does it have smth to do w/ interchangeability?)}}
+      \begin{enumerate}
+        \item $\psi \wedge \varphi$ \qquad $x_1:A_1,...,x_n:A_n,y_1:B_1,...,y_m:B_m,...,y_m:B_m$
+        \item $\psi \vee \varphi$ \qquad $x_1:A_1,...,x_n:A_n,y_1:B_1,...,y_m:B_m,...,y_m:B_m$
+        \item $\neg \psi$ \quad \qquad $x_1:A_1,...,x_n:A_n$
+        \item $\psi \Rightarrow \varphi$ \qquad $x_1:A_1,...,x_n:A_n,y_1:B_1,...,y_m:B_m,...,y_m:B_m$
+        \item $\psi \Leftrightarrow \varphi$ \qquad $x_1:A_1,...,x_n:A_n,y_1:B_1,...,y_m:B_m,...,y_m:B_m$
+        \item $\exists x_1: \psi$ \quad \quad $x_2:A_2,...,x_n:A_n$
+        \item $\forall x_1: \psi$ \qquad $x_2:A_2,...,x_n:A_n$
+      \end{enumerate}
+      \item If $t_1:A_1, ..., t_n:A_n$ are terms and \\ $R \rightarrowtail A_1 \times ... \times A_n$ is a relation-in-context \\ Then $R([t_1/x_1],[t_2/x_2],...,[t_n/x_n])$ is a formula-in-context ($[t_n/x_n]$ is substitution of terms x)
+      \item If $t_1,t_2:A$ \\ Then $t_1=t_2$ is a formulae-in-context
+    \end{enumerate}
+  \endgroup
+\end{itemize}
+{\textcolor{red}{(are both terms and formulae-in-context defined through structural induction?)}}
+
+
+\end{document}
