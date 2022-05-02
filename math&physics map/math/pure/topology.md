@@ -1,2 +1,0 @@
-study of morphisms
-#math 
